@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
 from PIL import Image
 import streamlit as st
@@ -63,39 +57,3 @@ if uploaded_file is not None:
     # Prédire la race de chien et afficher le résultat
     predicted_class = predict_dog_breed(image)
     st.write("Predicted dog breed:", predicted_class)
-
-
-# In[2]:
-
-
-import numpy as np
-from PIL import Image
-
-import tensorflow as tf
-from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
-from tensorflow.keras.models import load_model
-
-
-# In[5]:
-
-
-pip show numpy
-
-
-# In[7]:
-
-
-pip show Pillow
-
-
-# In[8]:
-
-
-pip show tensorflow
-
-
-# In[ ]:
-
-
-
-
