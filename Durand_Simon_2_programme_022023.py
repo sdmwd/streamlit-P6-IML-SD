@@ -10,6 +10,9 @@ from tensorflow.keras.models import load_model
 # Charger le modèle ResNet50 pré-entraîné
 model = tf.keras.applications.ResNet50(weights='imagenet')
 
+# Load the fine-tuned InceptionV3 model
+model = load_model("model_120.h")
+
 # Define the file name to load from
 file_name = "dog_classes.json"
 
@@ -20,27 +23,25 @@ with open(file_name, 'r') as file:
 
 # Définir une fonction pour prétraiter l'image d'entrée
 def preprocess_image(image):
-    # Redimensionner l'image à la taille d'entrée requise par le modèle
-    image = image.resize((224, 224))
-    # Convertir l'image PIL en tableau numpy
+    # Resize the image to the size required by the model
+    image = image.resize((299, 299))
+    # Convert the PIL image to a numpy array
     img_array = np.array(image)
-    # Prétraiter l'image pour le modèle ResNet50
-    img_array = preprocess_input(img_array)
-    # Ajouter une dimension de lot (batch) au tableau
+    # Preprocess the image for InceptionV3
+    img_array = tf.keras.applications.inception_v3.preprocess_input(img_array)
+    # Add a batch dimension to the array
     img_array = np.expand_dims(img_array, axis=0)
     return img_array
 
-# Définir une fonction pour prédire la race de chien
 def predict_dog_breed(image):
     # Prétraiter l'image d'entrée
     img_array = preprocess_image(image)
-    # Utiliser le modèle ResNet50 pré-entraîné pour faire une prédiction
+    # Utiliser le modèle personnalisé pour faire une prédiction
     predictions = model.predict(img_array)
-    # Décoder les 5 meilleures classes et leurs probabilités
-    decoded_predictions = decode_predictions(predictions, top=1)[0]
-    # Obtenir la classe prédite et la probabilité
-    predicted_class = decoded_predictions[0][1].split('-')[-1].title()
-    prediction_accuracy = round(decoded_predictions[0][2]*100, 2)
+    # Décoder la prédiction et obtenir la classe prédite et la probabilité
+    class_index = np.argmax(predictions[0])
+    predicted_class = dog_classes[class_index]
+    prediction_accuracy = round(predictions[0][class_index]*100, 2)
     return predicted_class, prediction_accuracy
 
 # Configurer l'application Streamlit
@@ -56,5 +57,5 @@ if uploaded_file is not None:
 
     # Prédire la race de chien et afficher le résultat
     predicted_class, prediction_accuracy = predict_dog_breed(image)
-    st.write("Race prédite : **" + predicted_class.capitalize() + "**")
-    st.write("Précision de la prédiction : **" + str(prediction_accuracy) + "%**")
+    st.write("Race prédite :", predicted_class)
+    st.write("Précision de la prédiction :", prediction_accuracy, "%")
