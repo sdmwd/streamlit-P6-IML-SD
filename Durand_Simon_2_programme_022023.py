@@ -40,7 +40,9 @@ def predict_dog_breed(image):
     decoded_predictions = decode_predictions(predictions, top=5)[0]
     # Obtenir l'indice de classe prédit et l'étiquette
     class_code = decoded_predictions[0][0]
+    st.write(class_code)
     class_index = int(class_code.split('-')[0][1:])
+    st.write(class_index)
     predicted_class = dog_classes[str(class_index)]
     return predicted_class
 
@@ -56,6 +58,5 @@ if uploaded_file is not None:
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
     # Prédire la race de chien et afficher le résultat
-    st.write('ok')
     predicted_class = predict_dog_breed(image)
     st.write("Predicted dog breed:", predicted_class)
