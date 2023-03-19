@@ -38,11 +38,12 @@ def predict_dog_breed(image):
     predictions = model.predict(img_array)
     # Décoder les 5 meilleures classes et leurs probabilités
     decoded_predictions = decode_predictions(predictions, top=5)[0]
-    # Obtenir l'indice de classe prédit et l'étiquette
-    class_code = decoded_predictions[0][0]
-    st.write(class_code)
-    predicted_class = dog_classes[str(class_code)]
-    return predicted_class
+    # Obtenir l'indice de classe prédit, l'étiquette et la probabilité
+    class_index, predicted_class, accuracy = decoded_predictions[0]
+    # Récupérer le nom de la race de chien à partir de la classe prédite
+    predicted_class = predicted_class.split("-")[-1].capitalize()
+    # Afficher le résultat de la prédiction avec le score de confiance
+    st.write("Race prédite :", predicted_class, "avec une confiance de", round(accuracy*100, 2), "%")
 
 # Configurer l'application Streamlit
 st.title("Prédicteur de race de chien")
@@ -57,4 +58,4 @@ if uploaded_file is not None:
 
     # Prédire la race de chien et afficher le résultat
     predicted_class = predict_dog_breed(image)
-    st.write("Predicted dog breed:", predicted_class)
+    st.write("Race prédite :", predicted_class.capitalize())
