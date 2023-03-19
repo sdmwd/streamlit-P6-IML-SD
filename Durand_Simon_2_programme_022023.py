@@ -35,11 +35,12 @@ def predict_dog_breed(image):
     predictions = model.predict(img_array)
     # Décoder les 5 meilleures classes et leurs probabilités
     decoded_predictions = decode_predictions(predictions, top=5)[0]
-    # Obtenir l'indice de classe prédit et l'étiquette
-    class_index = decoded_predictions[0][0]
-    predicted_class = classes[class_index]
+    # Extraire l'identifiant de la classe prédite (sans le préfixe 'n')
+    class_id = decoded_predictions[0][0].split("_")[-1]
+    # Trouver la race de chien correspondante dans le dictionnaire de classes
+    predicted_class = classes[class_id]
     return predicted_class
-
+    
 # Configurer l'application Streamlit
 st.title("Prédicteur de race de chien")
 
