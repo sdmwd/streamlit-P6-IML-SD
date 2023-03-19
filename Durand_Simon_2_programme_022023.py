@@ -56,5 +56,5 @@ if uploaded_file is not None:
 
     # Prédire la race de chien et afficher le résultat
     predicted_class, prediction_accuracy = predict_dog_breed(image)
-    st.write("Race prédite :", predicted_class)
-    st.write("Précision de la prédiction :", prediction_accuracy, "%")
+    st.write("Race prédite : **" + predicted_class.capitalize() + "**")
+    st.write("Précision de la prédiction : **" + str(prediction_accuracy) + "%**")
