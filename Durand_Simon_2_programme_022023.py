@@ -11,7 +11,7 @@ from tensorflow.keras.models import load_model
 model = tf.keras.applications.ResNet50(weights='imagenet')
 
 # Define the file name to load from
-file_name = "dog_classes_code.json"
+file_name = "dog_classes.json"
 
 # Open the file in read mode
 with open(file_name, 'r') as file:
@@ -39,8 +39,9 @@ def predict_dog_breed(image):
     # Décoder les 5 meilleures classes et leurs probabilités
     decoded_predictions = decode_predictions(predictions, top=5)[0]
     # Obtenir l'indice de classe prédit et l'étiquette
-    class_index = decoded_predictions[0][0]
-    predicted_class = classes[class_index]
+    class_code = decoded_predictions[0][0]
+    class_index = int(class_code.split('-')[0][1:])
+    predicted_class = dog_classes[class_index]
     return predicted_class
 
 # Configurer l'application Streamlit
