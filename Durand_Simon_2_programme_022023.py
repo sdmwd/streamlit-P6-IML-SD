@@ -47,7 +47,7 @@ def predict_dog_breed(image):
 st.title("Prédicteur de race de chien")
 
 # Permettre à l'utilisateur de télécharger une image
-uploaded_file = st.file_uploader(" ", type="jpg")
+uploaded_file = st.file_uploader("Importez votre image", type="jpg")
 
 if uploaded_file is not None:
     # Afficher l'image téléchargée
