@@ -1,5 +1,4 @@
 numpy==1.24.2
 Pillow==9.4.0
 tensorflow==2.10.1
-
-ss
+json==2.0
