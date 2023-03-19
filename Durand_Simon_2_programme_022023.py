@@ -41,7 +41,7 @@ def predict_dog_breed(image):
     # Obtenir l'indice de classe prédit et l'étiquette
     class_code = decoded_predictions[0][0]
     class_index = int(class_code.split('-')[0][1:])
-    predicted_class = dog_classes[class_index]
+    predicted_class = dog_classes[str(class_index)]
     return predicted_class
 
 # Configurer l'application Streamlit
