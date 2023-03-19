@@ -56,5 +56,6 @@ if uploaded_file is not None:
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
     # Prédire la race de chien et afficher le résultat
+    st.write('ok')
     predicted_class = predict_dog_breed(image)
     st.write("Predicted dog breed:", predicted_class)
