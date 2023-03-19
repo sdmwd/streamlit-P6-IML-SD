@@ -1,3 +1,5 @@
+import json
+
 import numpy as np
 from PIL import Image
 import streamlit as st
@@ -9,14 +11,14 @@ from tensorflow.keras.models import load_model
 # Charger le modèle ResNet50 pré-entraîné
 model = tf.keras.applications.ResNet50(weights='imagenet')
 
+# Define the file name to load from
+file_name = "dog_classes.json"
 
-# Définir les classes de races de chiens
-classes = {
-    0: 'Afghan_hound',
-    1: 'Airedale_terrier',
-    2: 'Akita',
-    # Add more dog breed classes here...
-}
+# Open the file in read mode
+with open(file_name, 'r') as file:
+    # Decode the JSON data in the file and load it into a dictionary
+    classes = json.load(file)
+    
 
 # Définir une fonction pour prétraiter l'image d'entrée
 def preprocess_image(image):
@@ -44,10 +46,10 @@ def predict_dog_breed(image):
     return predicted_class
 
 # Configurer l'application Streamlit
-st.title("Dog Breed Predictor")
+st.title("Prédicteur de race de chien")
 
 # Permettre à l'utilisateur de télécharger une image
-uploaded_file = st.file_uploader("Choose an image...", type="jpg")
+uploaded_file = st.file_uploader("Importez votre image", type="jpg")
 
 if uploaded_file is not None:
     # Afficher l'image téléchargée
