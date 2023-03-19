@@ -41,9 +41,7 @@ def predict_dog_breed(image):
     # Obtenir l'indice de classe prédit et l'étiquette
     class_code = decoded_predictions[0][0]
     st.write(class_code)
-    class_index = int(class_code.split('-')[0][1:])
-    st.write(class_index)
-    predicted_class = dog_classes[str(class_index)]
+    predicted_class = dog_classes[str(class_code)]
     return predicted_class
 
 # Configurer l'application Streamlit
@@ -55,7 +53,7 @@ uploaded_file = st.file_uploader("Importez votre image", type="jpg")
 if uploaded_file is not None:
     # Afficher l'image téléchargée
     image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image', use_column_width=True)
+    st.image(image, caption='Uploaded Image', width=300)
 
     # Prédire la race de chien et afficher le résultat
     predicted_class = predict_dog_breed(image)
