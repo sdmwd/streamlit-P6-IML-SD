@@ -16,7 +16,7 @@ file_name = "dog_classes.json"
 # Open the file in read mode
 with open(file_name, 'r') as file:
     # Decode the JSON data in the file and load it into a dictionary
-    classes = json.load(file)
+    dog_classes = json.load(file)
 
 # Définir une fonction pour prétraiter l'image d'entrée
 def preprocess_image(image):
