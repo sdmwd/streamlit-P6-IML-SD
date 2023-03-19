@@ -7,12 +7,15 @@ import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 from tensorflow.keras.models import load_model
 
-
 # Charger le modèle ResNet50 pré-entraîné
 model = tf.keras.applications.ResNet50(weights='imagenet')
 
-# Charger le fichier JSON contenant les classes de races de chiens
-with open("dog_classes.json", 'r') as file:
+# Define the file name to load from
+file_name = "dog_classes_code.json"
+
+# Open the file in read mode
+with open(file_name, 'r') as file:
+    # Decode the JSON data in the file and load it into a dictionary
     classes = json.load(file)
 
 # Définir une fonction pour prétraiter l'image d'entrée
@@ -35,12 +38,11 @@ def predict_dog_breed(image):
     predictions = model.predict(img_array)
     # Décoder les 5 meilleures classes et leurs probabilités
     decoded_predictions = decode_predictions(predictions, top=5)[0]
-    # Extraire l'identifiant de la classe prédite (sans le préfixe 'n')
-    class_id = decoded_predictions[0][0].split("_")[-1]
-    # Trouver la race de chien correspondante dans le dictionnaire de classes
-    predicted_class = classes[class_id]
+    # Obtenir l'indice de classe prédit et l'étiquette
+    class_index = decoded_predictions[0][0]
+    predicted_class = classes[class_index]
     return predicted_class
-    
+
 # Configurer l'application Streamlit
 st.title("Prédicteur de race de chien")
 
@@ -50,8 +52,8 @@ uploaded_file = st.file_uploader("Importez votre image", type="jpg")
 if uploaded_file is not None:
     # Afficher l'image téléchargée
     image = Image.open(uploaded_file)
-    st.image(image, caption='Image téléchargée', use_column_width=True)
+    st.image(image, caption='Uploaded Image', use_column_width=True)
 
     # Prédire la race de chien et afficher le résultat
     predicted_class = predict_dog_breed(image)
-    st.write("Race de chien prédite :", predicted_class)
+    st.write("Predicted dog breed:", predicted_class)
