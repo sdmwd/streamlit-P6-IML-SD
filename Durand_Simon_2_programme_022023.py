@@ -37,13 +37,11 @@ def predict_dog_breed(image):
     # Utiliser le modèle ResNet50 pré-entraîné pour faire une prédiction
     predictions = model.predict(img_array)
     # Décoder les 5 meilleures classes et leurs probabilités
-    decoded_predictions = decode_predictions(predictions, top=5)[0]
-    # Obtenir l'indice de classe prédit, l'étiquette et la probabilité
-    class_index, predicted_class, accuracy = decoded_predictions[0]
-    # Récupérer le nom de la race de chien à partir de la classe prédite
-    predicted_class = predicted_class.split("-")[-1].capitalize()
-    # Afficher le résultat de la prédiction avec le score de confiance
-    st.write("Race prédite :", predicted_class, "avec une confiance de", round(accuracy*100, 2), "%")
+    decoded_predictions = decode_predictions(predictions, top=1)[0]
+    # Obtenir la classe prédite et la probabilité
+    predicted_class = decoded_predictions[0][1].split('-')[-1].title()
+    prediction_accuracy = round(decoded_predictions[0][2]*100, 2)
+    return predicted_class, prediction_accuracy
 
 # Configurer l'application Streamlit
 st.title("Prédicteur de race de chien")
@@ -57,5 +55,6 @@ if uploaded_file is not None:
     st.image(image, caption='Uploaded Image', width=300)
 
     # Prédire la race de chien et afficher le résultat
-    predicted_class = predict_dog_breed(image)
-    st.write("Race prédite :", predicted_class.capitalize())
+    predicted_class, prediction_accuracy = predict_dog_breed(image)
+    st.write("Race prédite :", predicted_class)
+    st.write("Précision de la prédiction :", prediction_accuracy, "%")
