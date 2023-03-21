@@ -21,17 +21,17 @@ img_size = (224, 224)
 
 # Définir une fonction pour prétraiter l'image d'entrée
 def preprocess_image(image):
+    # Convertir l'image PIL en tableau numpy
+    image = np.array(image)
+    # Convertir le tableau numpy en tenseur TensorFlow
+    image = tf.convert_to_tensor(image)
     # Redimensionner l'image à la taille requise par le modèle
     image = tf.image.resize(image, img_size)
-    # Convertir l'image PIL en tableau numpy
-    img_array = np.array(image)
     # Normaliser les valeurs de pixels pour qu'elles soient dans la plage [0,1]
     image = tf.cast(image, tf.float32) / 255.0
     # Ajouter une dimension de lot (batch) au tableau
     img_array = np.expand_dims(img_array, axis=0)
     return img_array
-
-
 
 # Définir la fonction de prédiction
 def predict_dog_breed(image):
