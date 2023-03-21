@@ -4,31 +4,36 @@ from PIL import Image
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 
-# Load the fine-tuned InceptionV3 model
+# Charger le modèle InceptionV3 pré entraîné et ajusté finement
 model = load_model("model_120.h5")
 
-# Define the file name to load from
+# Définir le fichier contenant les classes des résultats
 file_name = "dog_classes.json"
 
-# Open the file in read mode
+# Ouvrir le fichier json avec les classes des résultats
 with open(file_name, 'r') as file:
     # Decode the JSON data in the file and load it into a dictionary
     dog_classes = json.load(file)
 
+# Définir les dimensions de l'image
+img_size = (224, 224)
+
 # Définir une fonction pour prétraiter l'image d'entrée
 def preprocess_image(image):
-    # Resize the image to the size required by the model
-    image = image.resize((299, 299))
-    # Convert the PIL image to a numpy array
+    # Redimensionner l'image à la taille requise par le modèle
+    image = tf.image.resize(image, img_size)
+    # Convertir l'image PIL en tableau numpy
     img_array = np.array(image)
-    # Preprocess the image for InceptionV3
-    img_array = tf.keras.applications.inception_v3.preprocess_input(img_array)
-    # Add a batch dimension to the array
+    # Normaliser les valeurs de pixels pour qu'elles soient dans la plage [0,1]
+    image = tf.cast(image, tf.float32) / 255.0
+    # Ajouter une dimension de lot (batch) au tableau
     img_array = np.expand_dims(img_array, axis=0)
     return img_array
 
+
+
+# Définir la fonction de prédiction
 def predict_dog_breed(image):
     # Prétraiter l'image d'entrée
     img_array = preprocess_image(image)
@@ -43,11 +48,11 @@ def predict_dog_breed(image):
 # Configurer l'application Streamlit
 st.title("Prédicteur de race de chien")
 
-# Permettre à l'utilisateur de télécharger une image
+# Permettre à l'utilisateur de téléverser une image
 uploaded_file = st.file_uploader("Importez votre image", type="jpg")
 
 if uploaded_file is not None:
-    # Afficher l'image téléchargée
+    # Afficher l'image téléversée
     image = Image.open(uploaded_file)
     st.image(image, width=300)
 
