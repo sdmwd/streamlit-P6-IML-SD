@@ -41,9 +41,6 @@ def predict_dog_breed(image):
     predictions = model.predict(img_array)
     # Décoder la prédiction et obtenir la classe prédite et la probabilité
     class_index = np.argmax(predictions[0])
-
-    st.write(class_index)
-    st.write(dog_classes)
     predicted_class = dog_classes[str(class_index)]
     prediction_accuracy = round(predictions[0][class_index]*100, 2)
     return predicted_class, prediction_accuracy
