@@ -9,7 +9,7 @@ from tensorflow.keras.models import load_model
 model = load_model("model_120.h5")
 
 # Définir le fichier contenant les classes des résultats
-file_name = "dog_classes.json"
+file_name = "dog_classes_name.json"
 
 # Ouvrir le fichier json avec les classes des résultats
 with open(file_name, 'r') as file:
