@@ -30,8 +30,8 @@ def preprocess_image(image):
     # Normaliser les valeurs de pixels pour qu'elles soient dans la plage [0,1]
     image = tf.cast(image, tf.float32) / 255.0
     # Ajouter une dimension de lot (batch) au tableau
-    img_array = np.expand_dims(img_array, axis=0)
-    return img_array
+    image = np.expand_dims(image, axis=0)
+    return image
 
 # Définir la fonction de prédiction
 def predict_dog_breed(image):
