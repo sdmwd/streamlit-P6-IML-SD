@@ -44,7 +44,7 @@ def predict_dog_breed(image):
 
     st.write(class_index)
     st.write(dog_classes)
-    predicted_class = dog_classes[class_index]
+    predicted_class = dog_classes[str(class_index)]
     prediction_accuracy = round(predictions[0][class_index]*100, 2)
     return predicted_class, prediction_accuracy
 
