@@ -1,14 +1,10 @@
 import json
-
 import numpy as np
 from PIL import Image
 import streamlit as st
 import tensorflow as tf
-from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 from tensorflow.keras.models import load_model
-
-# Charger le modèle ResNet50 pré-entraîné
-model = tf.keras.applications.ResNet50(weights='imagenet')
+from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 
 # Load the fine-tuned InceptionV3 model
 model = load_model("model_120.h")
