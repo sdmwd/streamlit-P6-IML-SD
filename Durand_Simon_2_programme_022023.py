@@ -7,7 +7,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 
 # Load the fine-tuned InceptionV3 model
-model = load_model("model_120.h")
+model = load_model("model_120.h5")
 
 # Define the file name to load from
 file_name = "dog_classes.json"
