@@ -46,8 +46,9 @@ def predict_dog_breed(image):
     return predicted_class, prediction_accuracy
 
 # Configurer l'application Streamlit
-st.title("Prédicteur de race de chien")
 st.set_page_config(page_title="Prédicteur de race de chien", page_icon=":dog:")
+st.title("Prédicteur de race de chien")
+
 
 # Permettre à l'utilisateur de téléverser une image
 uploaded_file = st.file_uploader("Importez votre image", type="jpg")
