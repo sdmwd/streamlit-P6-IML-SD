@@ -59,5 +59,5 @@ if uploaded_file is not None:
 
     # Prédire la race de chien et afficher le résultat
     predicted_class, prediction_accuracy = predict_dog_breed(image)
-    st.markdown("<p style='font-size: 1.5rem;'>Race prédite : <strong>" + predicted_class + "<strong></p>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size: 2rem;'>Précision de la prédiction : <strong>" + str(prediction_accuracy) + "%</strong></p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 1.5rem;'>Race prédite : <strong>" + predicted_class</strong>  + "<strong></p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 1.5rem;'>Précision de la prédiction : <strong>" + str(prediction_accuracy) + "%</strong></p>", unsafe_allow_html=True)
