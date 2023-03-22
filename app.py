@@ -49,7 +49,6 @@ def predict_dog_breed(image):
 st.set_page_config(page_title="Prédicteur de race de chien", page_icon=":dog:")
 st.title("Prédicteur de race de chien")
 
-
 # Permettre à l'utilisateur de téléverser une image
 uploaded_file = st.file_uploader("Importez votre image", type="jpg")
 
@@ -60,5 +59,5 @@ if uploaded_file is not None:
 
     # Prédire la race de chien et afficher le résultat
     predicted_class, prediction_accuracy = predict_dog_breed(image)
-    st.write("Race prédite :", predicted_class)
-    st.write("Précision de la prédiction :", prediction_accuracy, "%")
+    st.markdown("<p style='font-size: 1.5rem;'><strong>Race prédite :</strong> " + predicted_class + "</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 1.5rem;'>Précision de la prédiction : " + str(prediction_accuracy) + "%</p>", unsafe_allow_html=True)
