@@ -42,7 +42,7 @@ def predict_dog_breed(image):
     # Décoder la prédiction et obtenir la classe prédite et la probabilité
     class_index = np.argmax(predictions[0])
     predicted_class = dog_classes[str(class_index)]
-    prediction_accuracy = round(predictions[0][class_index]*100, 2)
+    prediction_accuracy = round(predictions[0][class_index]*100, 1)
     return predicted_class, prediction_accuracy
 
 # Configurer l'application Streamlit
